@@ -2,11 +2,11 @@ package com.nighttwo1.presentation.ui
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import com.nighttwo1.presentation.theme.LaunchMeTheme
+import com.nighttwo1.presentation.theme.MoviesTheme
 
 @Composable
 fun RootScreen() {
-    LaunchMeTheme {
+    MoviesTheme {
         Text("Hello")
     }
 }

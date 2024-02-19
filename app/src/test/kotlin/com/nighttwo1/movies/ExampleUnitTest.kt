@@ -1,4 +1,4 @@
-package com.nighttwo1.launchme
+package com.nighttwo1.movies
 
 import org.junit.Test
 

@@ -1,4 +1,4 @@
-package com.nighttwo1.launchme
+package com.nighttwo1.movies
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

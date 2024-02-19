@@ -10,11 +10,11 @@ plugins {
 }
 
 android {
-    namespace = "com.nighttwo1.launchme"
+    namespace = "com.nighttwo1.movies"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.nighttwo1.launchme"
+        applicationId = "com.nighttwo1.movies"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
