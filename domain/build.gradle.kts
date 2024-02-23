@@ -12,6 +12,7 @@ java {
 dependencies {
     implementation(libs.javax.inject)
     implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.paging.common)
 
     testImplementation(libs.junit)
 }

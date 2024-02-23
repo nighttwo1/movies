@@ -23,6 +23,7 @@ android {
         consumerProguardFiles("consumer-rules.pro")
 
         buildConfigField("String", "API_BASE_URL", properties["api_base_url"].toString())
+        buildConfigField("String", "API_TOKEN", properties["api_key"].toString())
     }
 
     buildTypes {
@@ -55,13 +56,15 @@ dependencies {
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
 
-    implementation(libs.jsoup)
-
     implementation(libs.retrofit)
     implementation(libs.okhttp)
     implementation(libs.logging.interceptor)
     implementation(libs.retrofit2.kotlinx.serialization.converter)
     implementation(libs.kotlinx.serialization.json)
+
+    // paging3
+    // https://developer.android.com/topic/libraries/architecture/paging/v3-overview?hl=ko
+    implementation(libs.paging.runtime)
 }
 
 kapt {

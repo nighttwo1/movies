@@ -2,14 +2,17 @@ package com.nighttwo1.data.module
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.nighttwo1.data.BuildConfig
-import com.nighttwo1.data.service.ApiService
+import com.nighttwo1.data.adapter.NetworkResultCallFactory
+import com.nighttwo1.data.service.MovieService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.json.Json
+import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.OkHttpClient
+import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import javax.inject.Singleton
@@ -18,7 +21,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 class ApiModule {
     @Provides
-    fun provideBaseUrl() = BuildConfig.API_BASE_URL
+    fun provideBaseUrl() = "https://api.themoviedb.org/3/"
 
     @Provides
     @Singleton
@@ -26,10 +29,12 @@ class ApiModule {
         val loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
         OkHttpClient.Builder()
+            .addInterceptor(RequestInterceptor())
             .addInterceptor(loggingInterceptor)
             .build()
     } else OkHttpClient
         .Builder()
+        .addInterceptor(RequestInterceptor())
         .build()
 
     @Provides
@@ -40,11 +45,25 @@ class ApiModule {
     ): Retrofit =
         Retrofit.Builder()
             .baseUrl(baseUrl)
-            .addConverterFactory(Json.asConverterFactory("application/json".toMediaTypeOrNull()!!))
+            .addCallAdapterFactory(NetworkResultCallFactory())
+            .addConverterFactory(json.asConverterFactory("application/json".toMediaTypeOrNull()!!))
             .client(okHttpClient)
             .build()
 
     @Provides
     @Singleton
-    fun provideApiService(retrofit: Retrofit): ApiService = retrofit.create(ApiService::class.java)
+    fun provideMovieService(retrofit: Retrofit): MovieService = retrofit.create(MovieService::class.java)
+}
+
+class RequestInterceptor: Interceptor{
+    override fun intercept(chain: Interceptor.Chain): Response = with(chain) {
+        val newRequest = request().newBuilder()
+            .addHeader("Authorization", "Bearer ${BuildConfig.API_TOKEN}")
+            .build()
+        chain.proceed(newRequest)
+    }
+}
+
+val json = Json {
+    ignoreUnknownKeys = true
 }

@@ -73,6 +73,10 @@ dependencies {
 
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test)
+
+    implementation(libs.paging.common)
+    implementation(libs.paging.runtime)
+    implementation(libs.paging.compose)
 }
 
 kapt {
