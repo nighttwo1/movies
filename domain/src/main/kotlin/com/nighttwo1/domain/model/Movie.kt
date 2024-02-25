@@ -12,5 +12,8 @@ data class Movie(
     val posterPath: String,
     val releaseDate: String,
     val title: String,
-    val rating: Double
+    val rating: Ratings,
 )
+
+@JvmInline
+value class Ratings(val value: Double)

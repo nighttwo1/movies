@@ -77,6 +77,7 @@ dependencies {
     implementation(libs.paging.common)
     implementation(libs.paging.runtime)
     implementation(libs.paging.compose)
+    implementation("com.github.bumptech.glide:compose:1.0.0-beta01")
 }
 
 kapt {

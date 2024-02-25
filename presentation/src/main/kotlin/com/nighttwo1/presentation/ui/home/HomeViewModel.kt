@@ -1,4 +1,4 @@
-package com.nighttwo1.presentation.ui
+package com.nighttwo1.presentation.ui.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -8,8 +8,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class RootViewModel @Inject constructor(
+class HomeViewModel @Inject constructor(
     private val getNowPlayingMoviesUseCase: GetNowPlayingMoviesUseCase
-) : ViewModel() {
+): ViewModel() {
     val nowPlayingMovies = getNowPlayingMoviesUseCase().cachedIn(viewModelScope)
 }

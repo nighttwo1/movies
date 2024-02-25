@@ -1,5 +1,6 @@
 package com.nighttwo1.data.model
 
+import android.media.Rating
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerialName
 
@@ -36,7 +37,7 @@ fun TMDBMovies.toDomain(): com.nighttwo1.domain.model.TMDBMovies = com.nighttwo1
             posterPath = it.posterPath,
             releaseDate = it.releaseDate,
             title = it.title,
-            rating = it.rating
+            rating = com.nighttwo1.domain.model.Ratings(it.rating)
         )
     }
 )
