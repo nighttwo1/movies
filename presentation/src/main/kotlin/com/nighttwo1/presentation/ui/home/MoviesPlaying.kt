@@ -1,17 +1,15 @@
 package com.nighttwo1.presentation.ui.home
 
 import android.annotation.SuppressLint
-import android.media.Rating
-import android.widget.Space
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -20,40 +18,48 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.paging.LoadState
+import androidx.paging.LoadStates
+import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.bumptech.glide.integration.compose.placeholder
 import com.nighttwo1.domain.model.Movie
 import com.nighttwo1.domain.model.Ratings
-import kotlin.math.roundToInt
+import com.nighttwo1.presentation.R
+import com.nighttwo1.presentation.theme.MoviesTheme
+import kotlinx.coroutines.flow.flowOf
 
 @SuppressLint("PrivateResource")
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun NowPlaying(
-    nowPlayings: LazyPagingItems<Movie>
+fun MoviesPlaying(
+    title: String,
+    movies: LazyPagingItems<Movie>
 ) {
     val lazyListState = rememberLazyListState()
-
     Column(
         modifier = Modifier.padding(10.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        Text("Now playings", fontSize = 20.sp, fontWeight = FontWeight(700))
-        when (nowPlayings.loadState.refresh) {
+        Text(title, fontSize = 20.sp, fontWeight = FontWeight(700))
+        when (movies.loadState.refresh) {
             LoadState.Loading -> {
                 CircularProgressIndicator()
             }
 
             is LoadState.Error -> {
-
+                Button(onClick = { movies.retry() }) {
+                    Text("reload")
+                }
             }
 
             else -> {
@@ -62,22 +68,22 @@ fun NowPlaying(
                     horizontalArrangement = Arrangement.spacedBy(10.dp)
                 ) {
                     items(
-                        count = nowPlayings.itemCount,
+                        count = movies.itemCount,
                     ) { index ->
-                        val item = nowPlayings[index] ?: return@items
+                        val item = movies[index] ?: return@items
                         Card(
+                            modifier = Modifier.width(106.dp),
                             colors = CardDefaults.cardColors(
                                 containerColor = Color.Transparent
                             )
                         ) {
                             Box(
+                                modifier = Modifier.fillMaxWidth(),
                                 contentAlignment = Alignment.BottomStart
                             ) {
                                 GlideImage(
-                                    model = "https://image.tmdb.org/t/p/w500/${item.posterPath}",
-                                    loading = placeholder(
-                                        androidx.appcompat.R.drawable.test_level_drawable
-                                    ),
+                                    model = "https://image.tmdb.org/t/p/w342/${item.posterPath}",
+                                    loading = placeholder(R.drawable.poster_card),
                                     contentDescription = item.title
                                 )
                                 Text(
@@ -89,12 +95,47 @@ fun NowPlaying(
                                     fontStyle = FontStyle.Italic
                                 )
                             }
-                            Text(text = item.title, fontSize = 14.sp, fontWeight = FontWeight(500))
-                            Text(text = item.releaseDate, fontSize = 14.sp)
+                            Text(
+                                text = item.title,
+                                fontSize = 14.sp,
+                                fontWeight = FontWeight(500),
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            )
+                            Text(text = item.releaseDate, fontSize = 14.sp, overflow = TextOverflow.Ellipsis)
                         }
                     }
                 }
             }
         }
+    }
+}
+
+@Preview
+@Composable
+fun MoviesPlayingPreview() {
+    MoviesTheme {
+        MoviesPlaying(
+            "Popular",
+            flowOf(
+                PagingData.from(
+                    listOf(
+                        Movie(
+                            id = 1,
+                            posterPath = "",
+                            releaseDate = "",
+                            title = "Land of BadLand of Bad",
+                            rating = Ratings(40.0)
+                        )
+                    ),
+                    sourceLoadStates = LoadStates(
+                        //refresh = LoadState.Error(IllegalStateException()),
+                        refresh = LoadState.NotLoading(true),
+                        prepend = LoadState.NotLoading(true),
+                        append = LoadState.NotLoading(true),
+                    )
+                )
+            ).collectAsLazyPagingItems(),
+        )
     }
 }

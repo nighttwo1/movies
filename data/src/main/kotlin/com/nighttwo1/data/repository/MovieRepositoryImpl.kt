@@ -15,4 +15,8 @@ class MovieRepositoryImpl @Inject constructor(
     override fun getNowPlayingMovie(region: String): Flow<PagingData<Movie>> = singlePager { page ->
         movieService.getNowPlayingMovie(page, region).toDomain()
     }
+
+    override fun getPopularMovie(region: String): Flow<PagingData<Movie>> = singlePager { page ->
+        movieService.getPopularMovie(page, region).toDomain()
+    }
 }

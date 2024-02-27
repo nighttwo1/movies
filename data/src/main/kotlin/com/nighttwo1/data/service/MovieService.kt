@@ -10,4 +10,10 @@ interface MovieService {
         @Query("page") page: Int,
         @Query("region") region: String
     ): TMDBMovies
+
+    @GET("movie/popular")
+    suspend fun getPopularMovie(
+        @Query("page") page: Int,
+        @Query("region") region: String
+    ): TMDBMovies
 }

@@ -8,10 +8,12 @@ import androidx.paging.compose.collectAsLazyPagingItems
 @Composable
 fun HomePage(
     homeViewModel: HomeViewModel = hiltViewModel()
-){
+) {
     val nowPlayings = homeViewModel.nowPlayingMovies.collectAsLazyPagingItems()
+    val popularMovies = homeViewModel.popularMovies.collectAsLazyPagingItems()
 
     Column {
-        NowPlaying(nowPlayings)
+        MoviesPlaying("Now playings", nowPlayings)
+        MoviesPlaying("Popular", popularMovies)
     }
 }
