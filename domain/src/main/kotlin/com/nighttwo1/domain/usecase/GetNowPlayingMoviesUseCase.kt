@@ -6,5 +6,5 @@ import javax.inject.Inject
 class GetNowPlayingMoviesUseCase @Inject constructor(
     private val movieRepository: MovieRepository
 ) {
-    operator fun invoke(region: String = "KR") = movieRepository.getNowPlayingMovie(region)
+    operator fun invoke(language: String = "ko", region: String = "KR") = movieRepository.getNowPlayingMovie(language, region)
 }

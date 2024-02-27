@@ -12,11 +12,11 @@ import javax.inject.Inject
 class MovieRepositoryImpl @Inject constructor(
     private val movieService: MovieService
 ) : MovieRepository {
-    override fun getNowPlayingMovie(region: String): Flow<PagingData<Movie>> = singlePager { page ->
-        movieService.getNowPlayingMovie(page, region).toDomain()
+    override fun getNowPlayingMovie(language: String, region: String): Flow<PagingData<Movie>> = singlePager { page ->
+        movieService.getNowPlayingMovie(language, page, region).toDomain()
     }
 
-    override fun getPopularMovie(region: String): Flow<PagingData<Movie>> = singlePager { page ->
-        movieService.getPopularMovie(page, region).toDomain()
+    override fun getPopularMovie(language: String, region: String): Flow<PagingData<Movie>> = singlePager { page ->
+        movieService.getPopularMovie(language, page, region).toDomain()
     }
 }

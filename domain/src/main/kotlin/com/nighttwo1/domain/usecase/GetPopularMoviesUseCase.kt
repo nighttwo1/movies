@@ -6,5 +6,5 @@ import javax.inject.Inject
 class GetPopularMoviesUseCase @Inject constructor(
     private val movieRepository: MovieRepository
 ){
-    operator fun invoke(region: String = "kr") = movieRepository.getPopularMovie("kr")
+    operator fun invoke(language: String = "ko", region: String = "kr") = movieRepository.getPopularMovie(language, region)
 }
