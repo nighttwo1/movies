@@ -1,7 +1,6 @@
 package com.nighttwo1.presentation.ui
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -16,6 +15,7 @@ import androidx.navigation.compose.rememberNavController
 import com.nighttwo1.presentation.component.bottomNavigationBar.BottomNavigationBar
 import com.nighttwo1.presentation.theme.MoviesTheme
 import com.nighttwo1.presentation.ui.home.HomePage
+import com.nighttwo1.presentation.ui.movie.MovieDetail
 import com.nighttwo1.presentation.ui.search.SearchScreen
 
 @Composable
@@ -35,7 +35,6 @@ fun RootScreen() {
                 ) {
                     MainViewNavigation()
                 }
-
             }
         }
     }
@@ -43,13 +42,20 @@ fun RootScreen() {
 
 @Composable
 fun MainViewNavigation() {
-    NavHost(MoviesAppNavigation.mainViewNavigation.navHostController, startDestination = MainViewNavGraph.Home.route) {
-        composable(MainViewNavGraph.Home.route) {
+    NavHost(MoviesAppNavigation.mainViewNavigation.navHostController, startDestination = MainViewNavGraph.Movie.route) {
+        composable(MainViewNavGraph.Movie.route) {
             HomePage()
         }
 
         composable(MainViewNavGraph.Search.route) {
             SearchScreen()
+        }
+
+        composable(MainViewNavGraph.Movie.route + "/{movieId}") { backStackEntry ->
+            val movieId = backStackEntry.arguments?.getString("movieId")
+            movieId?.let { id ->
+                MovieDetail(movieId = id)
+            }
         }
     }
 }
@@ -61,7 +67,6 @@ val LocalMainViewNavigation = staticCompositionLocalOf<MainViewNavigation> {
 @Composable
 fun rememberMainNavigation(navController: NavHostController = rememberNavController()) =
     remember { MainViewNavigation(navController) }
-
 
 object MoviesAppNavigation {
     val mainViewNavigation: MainViewNavigation

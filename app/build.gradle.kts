@@ -15,7 +15,7 @@ android {
 
     defaultConfig {
         applicationId = "com.nighttwo1.movies"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -44,7 +44,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.2"
+        kotlinCompilerExtensionVersion = "1.5.10"
     }
     packagingOptions {
         resources {

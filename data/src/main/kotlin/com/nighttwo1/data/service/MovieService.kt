@@ -1,7 +1,10 @@
 package com.nighttwo1.data.service
 
+import com.nighttwo1.data.model.Movie
+import com.nighttwo1.data.model.MovieDetail
 import com.nighttwo1.data.model.TMDBMovies
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface MovieService {
@@ -18,4 +21,10 @@ interface MovieService {
         @Query("page") page: Int,
         @Query("region") region: String
     ): TMDBMovies
+
+    @GET("movie/{movie_id}")
+    suspend fun getMovieDetail(
+        @Path("movie_id") movieId: String,
+        @Query("language") language: String,
+    ): MovieDetail
 }

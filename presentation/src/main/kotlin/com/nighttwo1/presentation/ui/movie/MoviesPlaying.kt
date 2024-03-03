@@ -1,6 +1,7 @@
-package com.nighttwo1.presentation.ui.home
+package com.nighttwo1.presentation.ui.movie
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -35,10 +36,14 @@ import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.bumptech.glide.integration.compose.placeholder
 import com.nighttwo1.domain.model.Movie
+import com.nighttwo1.domain.model.MovieId
 import com.nighttwo1.domain.model.Ratings
 import com.nighttwo1.presentation.R
 import com.nighttwo1.presentation.theme.MoviesTheme
+import com.nighttwo1.presentation.ui.LocalMainViewNavigation
 import kotlinx.coroutines.flow.flowOf
+import java.text.SimpleDateFormat
+import java.util.*
 
 @SuppressLint("PrivateResource")
 @OptIn(ExperimentalGlideComposeApi::class)
@@ -47,7 +52,10 @@ fun MoviesPlaying(
     title: String,
     movies: LazyPagingItems<Movie>
 ) {
+    val mainViewNavigation = LocalMainViewNavigation.current
     val lazyListState = rememberLazyListState()
+    val dateFormat = SimpleDateFormat("yyyy-mm-dd")
+
     Column(
         modifier = Modifier.padding(10.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
@@ -74,7 +82,9 @@ fun MoviesPlaying(
                     ) { index ->
                         val item = movies[index] ?: return@items
                         Card(
-                            modifier = Modifier.width(106.dp),
+                            modifier = Modifier.width(106.dp).clickable {
+                                mainViewNavigation.goMovieDetail(item.id)
+                            },
                             colors = CardDefaults.cardColors(
                                 containerColor = Color.Transparent
                             )
@@ -105,7 +115,11 @@ fun MoviesPlaying(
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis
                             )
-                            Text(text = item.releaseDate, fontSize = 14.sp, overflow = TextOverflow.Ellipsis)
+                            Text(
+                                text = dateFormat.format(item.releaseDate),
+                                fontSize = 14.sp,
+                                overflow = TextOverflow.Ellipsis
+                            )
                         }
                     }
                 }
@@ -124,11 +138,11 @@ fun MoviesPlayingPreview() {
                 PagingData.from(
                     listOf(
                         Movie(
-                            id = 1,
+                            id = MovieId(1),
                             posterPath = "",
-                            releaseDate = "",
+                            releaseDate = Date(),
                             title = "Land of BadLand of Bad",
-                            rating = Ratings(40.0)
+                            rating = Ratings(40.0),
                         )
                     ),
                     sourceLoadStates = LoadStates(

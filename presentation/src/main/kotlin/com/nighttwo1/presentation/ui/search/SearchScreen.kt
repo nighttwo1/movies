@@ -132,7 +132,6 @@ fun SearchScreen(searchViewModel: SearchViewModel = hiltViewModel()) {
                                         maxLines = 1,
                                         overflow = TextOverflow.Ellipsis
                                     )
-                                    Text(text = item.releaseDate, fontSize = 14.sp, overflow = TextOverflow.Ellipsis)
                                 }
                             }
                         }
