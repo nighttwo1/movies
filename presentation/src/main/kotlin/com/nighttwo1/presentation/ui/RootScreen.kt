@@ -14,8 +14,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.nighttwo1.presentation.component.bottomNavigationBar.BottomNavigationBar
 import com.nighttwo1.presentation.theme.MoviesTheme
-import com.nighttwo1.presentation.ui.home.HomePage
 import com.nighttwo1.presentation.ui.movie.MovieDetail
+import com.nighttwo1.presentation.ui.movie.MovieScreen
 import com.nighttwo1.presentation.ui.search.SearchScreen
 
 @Composable
@@ -44,7 +44,7 @@ fun RootScreen() {
 fun MainViewNavigation() {
     NavHost(MoviesAppNavigation.mainViewNavigation.navHostController, startDestination = MainViewNavGraph.Movie.route) {
         composable(MainViewNavGraph.Movie.route) {
-            HomePage()
+            MovieScreen()
         }
 
         composable(MainViewNavGraph.Search.route) {

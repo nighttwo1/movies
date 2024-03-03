@@ -1,17 +1,16 @@
-package com.nighttwo1.presentation.ui.home
+package com.nighttwo1.presentation.ui.movie
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.nighttwo1.presentation.ui.movie.MoviesPlaying
 
 @Composable
-fun HomePage(
-    homeViewModel: HomeViewModel = hiltViewModel()
+fun MovieScreen(
+    movieViewModel: MovieViewModel = hiltViewModel()
 ) {
-    val nowPlayings = homeViewModel.nowPlayingMovies.collectAsLazyPagingItems()
-    val popularMovies = homeViewModel.popularMovies.collectAsLazyPagingItems()
+    val nowPlayings = movieViewModel.nowPlayingMovies.collectAsLazyPagingItems()
+    val popularMovies = movieViewModel.popularMovies.collectAsLazyPagingItems()
 
     Column {
         MoviesPlaying("Now playings", nowPlayings)

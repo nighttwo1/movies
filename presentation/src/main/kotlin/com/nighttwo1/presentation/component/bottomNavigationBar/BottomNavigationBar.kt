@@ -1,7 +1,6 @@
 package com.nighttwo1.presentation.component.bottomNavigationBar
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
