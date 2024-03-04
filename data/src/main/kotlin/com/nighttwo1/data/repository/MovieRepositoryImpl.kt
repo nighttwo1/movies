@@ -5,6 +5,7 @@ import com.nighttwo1.data.adapter.networkAdapter
 import com.nighttwo1.data.adapter.singlePager
 import com.nighttwo1.data.model.toDomain
 import com.nighttwo1.data.service.MovieService
+import com.nighttwo1.domain.NetworkResult
 import com.nighttwo1.domain.model.Movie
 import com.nighttwo1.domain.repository.MovieRepository
 import kotlinx.coroutines.flow.Flow
@@ -22,6 +23,6 @@ class MovieRepositoryImpl @Inject constructor(
     }
 
     override fun getMovieDetail(movieId: String, language: String) = networkAdapter {
-        movieService.getMovieDetail(movieId, language).toDomain()
+        (movieService.getMovieDetail(movieId, language) as NetworkResult.Success).data!!.toDomain()
     }
 }
