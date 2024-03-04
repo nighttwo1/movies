@@ -7,7 +7,6 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import java.text.SimpleDateFormat
 import java.time.Duration
-import java.util.*
 
 @Serializable
 data class TMDBMovies(

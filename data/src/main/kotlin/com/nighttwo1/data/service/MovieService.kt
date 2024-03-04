@@ -1,6 +1,5 @@
 package com.nighttwo1.data.service
 
-import com.nighttwo1.data.model.Movie
 import com.nighttwo1.data.model.MovieDetail
 import com.nighttwo1.data.model.TMDBMovies
 import retrofit2.http.GET
