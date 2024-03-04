@@ -43,6 +43,7 @@ import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.bumptech.glide.integration.compose.placeholder
 import com.nighttwo1.presentation.R
+import com.nighttwo1.presentation.ui.LocalMainViewNavigation
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalGlideComposeApi::class)
 @Composable
@@ -52,6 +53,8 @@ fun SearchScreen(searchViewModel: SearchViewModel = hiltViewModel()) {
 
     val searchedMovies = searchViewModel.searchedMovies.collectAsLazyPagingItems()
     val lazyGridState = rememberLazyGridState()
+
+    val mainViewNavigation = LocalMainViewNavigation.current
 
     Column {
         SearchBar(
@@ -101,7 +104,8 @@ fun SearchScreen(searchViewModel: SearchViewModel = hiltViewModel()) {
                                     modifier = Modifier.width(106.dp),
                                     colors = CardDefaults.cardColors(
                                         containerColor = Color.Transparent
-                                    )
+                                    ),
+                                    onClick = { mainViewNavigation.goMovieDetail(item.id) }
                                 ) {
                                     Box(
                                         modifier = Modifier.fillMaxWidth().height(160.dp),
