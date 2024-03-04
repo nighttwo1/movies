@@ -1,5 +1,6 @@
 package com.nighttwo1.data.service
 
+import com.nighttwo1.data.model.MovieAccountStates
 import com.nighttwo1.data.model.MovieDetail
 import com.nighttwo1.data.model.TMDBMovies
 import com.nighttwo1.domain.NetworkResult
@@ -27,4 +28,9 @@ interface MovieService {
         @Path("movie_id") movieId: String,
         @Query("language") language: String,
     ): NetworkResult<MovieDetail>
+
+    @GET("movie/{movie_id}/account_states")
+    suspend fun getMovieAccountStates(
+        @Path("movie_id") movieId: String,
+    ): MovieAccountStates
 }

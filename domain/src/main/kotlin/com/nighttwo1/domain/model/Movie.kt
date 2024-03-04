@@ -50,3 +50,10 @@ data class Genres(
     val id: GenreId,
     val name: String,
 )
+
+data class MovieAccountStates(
+    val id:MovieId,
+    val favorite: Boolean,
+    val rated: Boolean,
+    val watchlist: Boolean
+)

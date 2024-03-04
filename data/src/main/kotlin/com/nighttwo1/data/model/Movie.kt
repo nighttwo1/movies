@@ -54,6 +54,14 @@ data class Genres(
     val name: String,
 )
 
+@Serializable
+data class MovieAccountStates(
+    val id: Int,
+    val favorite: Boolean,
+    val rated: Boolean,
+    val watchlist: Boolean
+)
+
 fun TMDBMovies.toDomain(): com.nighttwo1.domain.model.TMDBMovies = com.nighttwo1.domain.model.TMDBMovies(
     page = page,
     totalPages = totalPages,
@@ -85,4 +93,11 @@ fun MovieDetail.toDomain() = com.nighttwo1.domain.model.MovieDetail(
     overview = overview,
     rating = Ratings(rating),
     runtime = Duration.ofMinutes(runtime.toLong())
+)
+
+fun MovieAccountStates.toDomain() = com.nighttwo1.domain.model.MovieAccountStates(
+    id = MovieId(id),
+    favorite = favorite,
+    rated = rated,
+    watchlist = watchlist
 )

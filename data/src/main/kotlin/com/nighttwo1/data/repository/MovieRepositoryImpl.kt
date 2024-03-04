@@ -7,6 +7,7 @@ import com.nighttwo1.data.model.toDomain
 import com.nighttwo1.data.service.MovieService
 import com.nighttwo1.domain.NetworkResult
 import com.nighttwo1.domain.model.Movie
+import com.nighttwo1.domain.model.MovieAccountStates
 import com.nighttwo1.domain.repository.MovieRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -24,5 +25,13 @@ class MovieRepositoryImpl @Inject constructor(
 
     override fun getMovieDetail(movieId: String, language: String) = networkAdapter {
         (movieService.getMovieDetail(movieId, language) as NetworkResult.Success).data!!.toDomain()
+    }
+
+    override suspend fun getMovieAccountStates(movieId: String): NetworkResult<MovieAccountStates> {
+        return try {
+            NetworkResult.Success(movieService.getMovieAccountStates(movieId).toDomain())
+        } catch (e: Exception) {
+            NetworkResult.Error(e)
+        }
     }
 }
