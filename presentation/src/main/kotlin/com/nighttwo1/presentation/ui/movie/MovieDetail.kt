@@ -3,6 +3,7 @@ package com.nighttwo1.presentation.ui.movie
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -25,6 +26,8 @@ import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -40,7 +43,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -52,6 +58,7 @@ import com.nighttwo1.domain.NetworkResult
 import com.nighttwo1.domain.model.GenreId
 import com.nighttwo1.domain.model.Genres
 import com.nighttwo1.domain.model.MovieAccountStates
+import com.nighttwo1.domain.model.MovieCredits
 import com.nighttwo1.domain.model.MovieDetail
 import com.nighttwo1.domain.model.MovieId
 import com.nighttwo1.domain.model.Ratings
@@ -59,21 +66,24 @@ import com.nighttwo1.presentation.R
 import com.nighttwo1.presentation.res.vector.MyIconPack
 import com.nighttwo1.presentation.res.vector.myiconpack.IcFavoriteBorder
 import com.nighttwo1.presentation.ui.LocalMainViewNavigation
+import com.nighttwo1.presentation.ui.MoviesAppNavigation.mainViewNavigation
 import java.text.SimpleDateFormat
 import java.time.Duration
 
 @Composable
 fun MovieDetail(
-    movieDetailViewModel: MovieDetailViewModel = hiltViewModel(),
+    viewModel: MovieDetailViewModel = hiltViewModel(),
     movieId: String?
 ) {
     val mainViewNavigation = LocalMainViewNavigation.current
-    val movie by movieDetailViewModel.movieDetailResult.collectAsState()
-    val movieAccountStatesResult by movieDetailViewModel.movieAccountStatesResult
+    val movie by viewModel.movieDetailResult.collectAsState()
+    val movieAccountStatesResult by viewModel.movieAccountStatesResult
+    val movieCredits by viewModel.movieCreditsResult
 
     LaunchedEffect(Unit) {
-        movieDetailViewModel.getMovieDetail(movieId ?: "")
-        movieDetailViewModel.getMovieAccountStates(movieId ?: "")
+        viewModel.getMovieDetail(movieId ?: "")
+        viewModel.getMovieAccountStates(movieId ?: "")
+        viewModel.getMovieCredits(movieId ?: "")
     }
 
     Box {
@@ -87,14 +97,20 @@ fun MovieDetail(
 
             is NetworkResult.Error -> {
                 Button(onClick = {
-                    movieDetailViewModel.getMovieDetail(movieId ?: "")
+                    viewModel.getMovieDetail(movieId ?: "")
                 }) {
                     Text("reload")
                 }
             }
 
             is NetworkResult.Success -> {
-                (movie as NetworkResult.Success<MovieDetail>).data?.let { MovieDetail(it, movieAccountStatesResult) }
+                (movie as NetworkResult.Success<MovieDetail>).data?.let {
+                    MovieDetail(
+                        it,
+                        movieAccountStatesResult,
+                        movieCredits
+                    )
+                }
             }
         }
         IconButton(
@@ -109,7 +125,8 @@ fun MovieDetail(
 @Composable
 private fun MovieDetail(
     movie: MovieDetail,
-    movieAccountStatesResult: NetworkResult<MovieAccountStates>
+    movieAccountStatesResult: NetworkResult<MovieAccountStates>,
+    movieCredits: NetworkResult<MovieCredits>
 ) {
     val dateFormat = SimpleDateFormat("yyyy")
     val scrollState = rememberScrollState()
@@ -203,6 +220,45 @@ private fun MovieDetail(
             }
             Spacer(modifier = Modifier.height(10.dp))
             Text(text = movie.overview, fontWeight = FontWeight(400), fontSize = 12.sp)
+            Spacer(modifier = Modifier.height(10.dp))
+            if (movieCredits is NetworkResult.Success) {
+                Row(modifier = Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    movieCredits.data?.cast?.forEach {
+                        Card(
+                            modifier = Modifier.width(79.5.dp),
+                            colors = CardDefaults.cardColors(
+                                containerColor = Color.Transparent
+                            )
+                        ) {
+                                Box(
+                                    modifier = Modifier.fillMaxWidth().height(120.dp),
+                                    contentAlignment = Alignment.BottomStart
+                                ) {
+                                    if (it.profilePath != null) {
+                                        GlideImage(
+                                            model = "https://image.tmdb.org/t/p/w154/${it.profilePath}",
+                                            contentDescription = it.name,
+                                            contentScale = ContentScale.FillBounds
+                                        )
+                                    }
+                                }
+                            Text(
+                                text = it.name,
+                                fontSize = 14.sp,
+                                fontWeight = FontWeight(600),
+                                softWrap = true
+                            )
+                            Text(
+                                text = it.character,
+                                fontSize = 12.sp,
+                                fontWeight = FontWeight(500),
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            )
+                        }
+                    }
+                }
+            }
         }
     }
 }
@@ -223,6 +279,7 @@ fun MovieDetailPreview() {
             rating = Ratings(7.0232),
             runtime = Duration.ofMinutes(113),
         ),
+        NetworkResult.Ready(),
         NetworkResult.Ready()
     )
 }

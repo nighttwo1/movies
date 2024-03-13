@@ -1,6 +1,7 @@
 package com.nighttwo1.data.service
 
 import com.nighttwo1.data.model.MovieAccountStates
+import com.nighttwo1.data.model.MovieCredits
 import com.nighttwo1.data.model.MovieDetail
 import com.nighttwo1.data.model.TMDBMovies
 import com.nighttwo1.domain.NetworkResult
@@ -33,4 +34,9 @@ interface MovieService {
     suspend fun getMovieAccountStates(
         @Path("movie_id") movieId: String,
     ): MovieAccountStates
+
+    @GET("movie/{movie_id}/credits")
+    suspend fun getMovieCredits(
+        @Path("movie_id") movieId: String,
+    ): MovieCredits
 }
