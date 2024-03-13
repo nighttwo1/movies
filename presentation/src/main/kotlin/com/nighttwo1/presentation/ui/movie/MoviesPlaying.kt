@@ -34,11 +34,9 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
-import com.bumptech.glide.integration.compose.placeholder
 import com.nighttwo1.domain.model.Movie
 import com.nighttwo1.domain.model.MovieId
 import com.nighttwo1.domain.model.Ratings
-import com.nighttwo1.presentation.R
 import com.nighttwo1.presentation.theme.MoviesTheme
 import com.nighttwo1.presentation.ui.LocalMainViewNavigation
 import kotlinx.coroutines.flow.flowOf
@@ -95,7 +93,6 @@ fun MoviesPlaying(
                             ) {
                                 GlideImage(
                                     model = "https://image.tmdb.org/t/p/w342/${item.posterPath}",
-                                    loading = placeholder(R.drawable.poster_card),
                                     contentDescription = item.title,
                                     contentScale = ContentScale.FillBounds
                                 )
