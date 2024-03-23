@@ -1,5 +1,6 @@
 package com.nighttwo1.presentation.ui.movie
 
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -23,8 +24,6 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Star
-import androidx.compose.material.icons.outlined.Favorite
-import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -38,13 +37,13 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -66,7 +65,6 @@ import com.nighttwo1.presentation.R
 import com.nighttwo1.presentation.res.vector.MyIconPack
 import com.nighttwo1.presentation.res.vector.myiconpack.IcFavoriteBorder
 import com.nighttwo1.presentation.ui.LocalMainViewNavigation
-import com.nighttwo1.presentation.ui.MoviesAppNavigation.mainViewNavigation
 import java.text.SimpleDateFormat
 import java.time.Duration
 
@@ -79,6 +77,7 @@ fun MovieDetail(
     val movie by viewModel.movieDetailResult.collectAsState()
     val movieAccountStatesResult by viewModel.movieAccountStatesResult
     val movieCredits by viewModel.movieCreditsResult
+    val favoriteResult by viewModel.movieFavoriteResult
 
     LaunchedEffect(Unit) {
         viewModel.getMovieDetail(movieId ?: "")
@@ -106,9 +105,12 @@ fun MovieDetail(
             is NetworkResult.Success -> {
                 (movie as NetworkResult.Success<MovieDetail>).data?.let {
                     MovieDetail(
+                        movieId ?: "",
                         it,
                         movieAccountStatesResult,
-                        movieCredits
+                        movieCredits,
+                        viewModel::setFavorite,
+                        favoriteResult
                     )
                 }
             }
@@ -124,20 +126,30 @@ fun MovieDetail(
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 private fun MovieDetail(
+    movieId: String,
     movie: MovieDetail,
     movieAccountStatesResult: NetworkResult<MovieAccountStates>,
-    movieCredits: NetworkResult<MovieCredits>
+    movieCredits: NetworkResult<MovieCredits>,
+    setFavorite: (movieId: String, enable: Boolean) -> Unit,
+    favoriteResult: NetworkResult<Boolean>
 ) {
     val dateFormat = SimpleDateFormat("yyyy")
     val scrollState = rememberScrollState()
 
-    val favorite by remember {
+    var favorite by remember(movieAccountStatesResult) {
         mutableStateOf(
             if (movieAccountStatesResult is NetworkResult.Success) {
                 movieAccountStatesResult.data!!.favorite
             } else false
         )
     }
+
+    LaunchedEffect(favoriteResult){
+        if(favoriteResult is NetworkResult.Success){
+            favorite = !favorite
+        }
+    }
+
     Column(
         modifier = Modifier.verticalScroll(scrollState)
     ) {
@@ -191,7 +203,7 @@ private fun MovieDetail(
             ) {
                 Column(
                     modifier = Modifier.width(80.dp).clip(shape = RoundedCornerShape(4.dp)).clickable {
-
+                        setFavorite(movieId, !favorite)
                     }.padding(8.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.spacedBy(2.dp)
@@ -268,6 +280,7 @@ private fun MovieDetail(
 fun MovieDetailPreview() {
     val dateFormat = SimpleDateFormat("yyyy-mm-dd")
     MovieDetail(
+        "969492",
         movie = MovieDetail(
             id = MovieId(969492),
             genres = listOf(Genres(GenreId(28), "Action"), Genres(GenreId(53), "Thriller")),
@@ -280,6 +293,8 @@ fun MovieDetailPreview() {
             runtime = Duration.ofMinutes(113),
         ),
         NetworkResult.Ready(),
-        NetworkResult.Ready()
+        NetworkResult.Ready(),
+        setFavorite =  {movieId: String, enable: Boolean -> },
+        NetworkResult.Ready(),
     )
 }

@@ -3,6 +3,7 @@ package com.nighttwo1.data.module
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.nighttwo1.data.BuildConfig
 import com.nighttwo1.data.adapter.NetworkResultCallFactory
+import com.nighttwo1.data.service.AccountService
 import com.nighttwo1.data.service.MovieService
 import com.nighttwo1.data.service.SearchService
 import dagger.Module
@@ -58,6 +59,10 @@ class ApiModule {
     @Provides
     @Singleton
     fun provideSearchService(retrofit: Retrofit): SearchService = retrofit.create(SearchService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideAccountService(retrofit: Retrofit): AccountService = retrofit.create(AccountService::class.java)
 }
 
 class RequestInterceptor: Interceptor{
