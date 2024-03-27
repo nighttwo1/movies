@@ -1,7 +1,9 @@
 package com.nighttwo1.data.module
 
+import com.nighttwo1.data.repository.AccountRepositoryImpl
 import com.nighttwo1.data.repository.MovieRepositoryImpl
 import com.nighttwo1.data.repository.SearchRepositoryImpl
+import com.nighttwo1.domain.repository.AccountRepository
 import com.nighttwo1.domain.repository.MovieRepository
 import com.nighttwo1.domain.repository.SearchRepository
 import dagger.Binds
@@ -20,4 +22,8 @@ interface BindRepositoryModule {
     @Binds
     @ViewModelScoped
     fun bindSearchRepository(searchRepository: SearchRepositoryImpl): SearchRepository
+
+    @Binds
+    @ViewModelScoped
+    fun bindAccountRepository(accountRepository: AccountRepositoryImpl): AccountRepository
 }
