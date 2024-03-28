@@ -1,7 +1,7 @@
 package com.nighttwo1.presentation.res.vector
 
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.nighttwo1.presentation.res.vector.myiconpack.IcFavoriteBorder
+import com.nighttwo1.presentation.res.vector.myiconpack.IcNewBox
 import kotlin.collections.List as ____KtList
 
 public object MyIconPack
@@ -13,6 +13,6 @@ public val MyIconPack.AllIcons: ____KtList<ImageVector>
     if (__AllIcons != null) {
       return __AllIcons!!
     }
-    __AllIcons= listOf(IcFavoriteBorder)
+    __AllIcons= listOf(IcNewBox)
     return __AllIcons!!
   }

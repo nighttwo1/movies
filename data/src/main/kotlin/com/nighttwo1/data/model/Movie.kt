@@ -29,6 +29,7 @@ data class Movie(
     val title: String,
     @SerialName("vote_average")
     val rating: Double,
+    val overview: String
 )
 
 @Serializable
@@ -79,6 +80,7 @@ fun Movie.toDomain() = com.nighttwo1.domain.model.Movie(
     releaseDate = dateFormat.parse(releaseDate)!!,
     title = title,
     rating = Ratings(rating),
+    overview = overview
 )
 
 fun MovieDetail.toDomain() = com.nighttwo1.domain.model.MovieDetail(

@@ -27,6 +27,7 @@ value class Ratings(val value: Double){
 data class Movie(
     val id: MovieId,
     val posterPath: String,
+    val overview: String,
     val releaseDate: Date,
     val title: String,
     val rating: Ratings,
