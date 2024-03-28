@@ -17,6 +17,7 @@ import com.nighttwo1.presentation.theme.MoviesTheme
 import com.nighttwo1.presentation.ui.movie.MovieDetail
 import com.nighttwo1.presentation.ui.movie.MovieScreen
 import com.nighttwo1.presentation.ui.search.SearchScreen
+import com.nighttwo1.presentation.ui.upcoming.UpcomingScreen
 
 @Composable
 fun RootScreen() {
@@ -45,6 +46,10 @@ fun MainViewNavigation() {
     NavHost(MoviesAppNavigation.mainViewNavigation.navHostController, startDestination = MainViewNavGraph.Movie.route) {
         composable(MainViewNavGraph.Movie.route) {
             MovieScreen()
+        }
+
+        composable(MainViewNavGraph.Upcoming.route) {
+            UpcomingScreen()
         }
 
         composable(MainViewNavGraph.Search.route) {

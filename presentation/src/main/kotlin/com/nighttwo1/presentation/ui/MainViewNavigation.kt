@@ -26,6 +26,16 @@ class MainViewNavigation(
         }
     }
 
+    fun goUpcoming() {
+        navHostController.navigate(MainViewNavGraph.Upcoming.route) {
+            navHostController.graph.startDestinationRoute?.let {
+                popUpTo(it) { saveState = true }
+            }
+            launchSingleTop = true
+            restoreState = true
+        }
+    }
+
     fun goSearch() {
         navHostController.navigate(MainViewNavGraph.Search.route) {
             navHostController.graph.startDestinationRoute?.let {
@@ -57,6 +67,10 @@ class MainViewNavigation(
         return navHostController.currentBackStackEntry?.destination?.route == MainViewNavGraph.Movie.route
     }
 
+    fun isUpcoming(): Boolean {
+        return navHostController.currentBackStackEntry?.destination?.route == MainViewNavGraph.Upcoming.route
+    }
+
     fun isSearch(): Boolean {
         return navHostController.currentBackStackEntry?.destination?.route == MainViewNavGraph.Search.route
     }
@@ -77,5 +91,9 @@ object MainViewNavGraph {
 
     object Movie : NavigationRoute {
         override val route = "Movie"
+    }
+
+    object Upcoming : NavigationRoute {
+        override val route = "Upcoming"
     }
 }

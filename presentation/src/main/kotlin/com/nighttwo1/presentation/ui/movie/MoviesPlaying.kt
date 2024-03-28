@@ -140,6 +140,7 @@ fun MoviesPlayingPreview() {
                             releaseDate = Date(),
                             title = "Land of BadLand of Bad",
                             rating = Ratings(40.0),
+                            overview = ""
                         )
                     ),
                     sourceLoadStates = LoadStates(
