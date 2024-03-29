@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.Flow
 interface MovieRepository {
     fun getNowPlayingMovie(language: String, region: String): Flow<PagingData<Movie>>
     fun getPopularMovie(language: String, region: String): Flow<PagingData<Movie>>
+    fun getTopRatedMovie(language: String, region: String): Flow<PagingData<Movie>>
     fun getUpcomingMovie(language: String, region: String): Flow<PagingData<Movie>>
     fun getMovieDetail(movieId: String, language: String): Flow<NetworkResult<MovieDetail>>
 

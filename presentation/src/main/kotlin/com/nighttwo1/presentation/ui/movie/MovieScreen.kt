@@ -15,11 +15,13 @@ fun MovieScreen(
     val scrollState = rememberScrollState()
     val nowPlayings = movieViewModel.nowPlayingMovies.collectAsLazyPagingItems()
     val popularMovies = movieViewModel.popularMovies.collectAsLazyPagingItems()
+    val topRatedMovies = movieViewModel.topRatedMovies.collectAsLazyPagingItems()
 
     Column(
         modifier = Modifier.verticalScroll(scrollState)
     ) {
         MoviesPlaying("Now playings", nowPlayings)
         MoviesPlaying("Popular", popularMovies)
+        MoviesPlaying("Top Rated", topRatedMovies)
     }
 }

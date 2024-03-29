@@ -24,6 +24,13 @@ interface MovieService {
         @Query("region") region: String
     ): TMDBMovies
 
+    @GET("movie/top_rated")
+    suspend fun getTopRatedMovie(
+        @Query("language") language: String,
+        @Query("page") page: Int,
+        @Query("region") region: String
+    ): TMDBMovies
+
     @GET("movie/upcoming")
     suspend fun getUpcomingMovie(
         @Query("language") language: String,
