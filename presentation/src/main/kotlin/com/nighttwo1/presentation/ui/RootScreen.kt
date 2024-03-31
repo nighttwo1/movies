@@ -3,6 +3,7 @@ package com.nighttwo1.presentation.ui
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
@@ -14,6 +15,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.nighttwo1.presentation.component.bottomNavigationBar.BottomNavigationBar
 import com.nighttwo1.presentation.theme.MoviesTheme
+import com.nighttwo1.presentation.ui.home.HomeScreen
 import com.nighttwo1.presentation.ui.movie.MovieDetail
 import com.nighttwo1.presentation.ui.movie.MovieScreen
 import com.nighttwo1.presentation.ui.search.SearchScreen
@@ -43,10 +45,18 @@ fun RootScreen() {
 
 @Composable
 fun MainViewNavigation() {
-    NavHost(MoviesAppNavigation.mainViewNavigation.navHostController, startDestination = MainViewNavGraph.Movie.route) {
-        composable(MainViewNavGraph.Movie.route) {
-            MovieScreen()
+    NavHost(MoviesAppNavigation.mainViewNavigation.navHostController, startDestination = MainViewNavGraph.Home.route) {
+        composable(MainViewNavGraph.Home.route){
+            HomeScreen()
         }
+
+//        composable(MainViewNavGraph.Movie.route) {
+//            MovieScreen()
+//        }
+//
+//        composable(MainViewNavGraph.TVSeries.route) {
+//            Text("tv")
+//        }
 
         composable(MainViewNavGraph.Upcoming.route) {
             UpcomingScreen()

@@ -16,15 +16,25 @@ class MainViewNavigation(
         }
     }
 
-    fun goMovie() {
-        navHostController.navigate(MainViewNavGraph.Movie.route) {
-            navHostController.graph.startDestinationRoute?.let {
-                popUpTo(it) { saveState = true }
-            }
-            launchSingleTop = true
-            restoreState = true
-        }
-    }
+//    fun goMovie() {
+//        navHostController.navigate(MainViewNavGraph.Movie.route) {
+//            navHostController.graph.startDestinationRoute?.let {
+//                popUpTo(it) { saveState = true }
+//            }
+//            launchSingleTop = true
+//            restoreState = true
+//        }
+//    }
+//
+//    fun goTVSeries() {
+//        navHostController.navigate(MainViewNavGraph.TVSeries.route) {
+//            navHostController.graph.startDestinationRoute?.let {
+//                popUpTo(it) { saveState = true }
+//            }
+//            launchSingleTop = true
+//            restoreState = true
+//        }
+//    }
 
     fun goUpcoming() {
         navHostController.navigate(MainViewNavGraph.Upcoming.route) {
@@ -63,9 +73,13 @@ class MainViewNavigation(
         return navHostController.currentBackStackEntry?.destination?.route == MainViewNavGraph.Home.route
     }
 
-    fun isMovie(): Boolean {
-        return navHostController.currentBackStackEntry?.destination?.route == MainViewNavGraph.Movie.route
-    }
+//    fun isMovie(): Boolean {
+//        return navHostController.currentBackStackEntry?.destination?.route == MainViewNavGraph.Movie.route
+//    }
+//
+//    fun isTVSeries(): Boolean {
+//        return navHostController.currentBackStackEntry?.destination?.route == MainViewNavGraph.TVSeries.route
+//    }
 
     fun isUpcoming(): Boolean {
         return navHostController.currentBackStackEntry?.destination?.route == MainViewNavGraph.Upcoming.route
@@ -90,7 +104,11 @@ object MainViewNavGraph {
     }
 
     object Movie : NavigationRoute {
-        override val route = "Movie"
+        override val route = "Home/Movie"
+    }
+
+    object TVSeries : NavigationRoute {
+        override val route = "Home/TVSeries"
     }
 
     object Upcoming : NavigationRoute {

@@ -6,6 +6,7 @@ import com.nighttwo1.data.adapter.NetworkResultCallFactory
 import com.nighttwo1.data.service.AccountService
 import com.nighttwo1.data.service.MovieService
 import com.nighttwo1.data.service.SearchService
+import com.nighttwo1.data.service.TrendingService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -63,6 +64,10 @@ class ApiModule {
     @Provides
     @Singleton
     fun provideAccountService(retrofit: Retrofit): AccountService = retrofit.create(AccountService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideTrendingService(retrofit: Retrofit): TrendingService = retrofit.create(TrendingService::class.java)
 }
 
 class RequestInterceptor: Interceptor{
