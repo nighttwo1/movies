@@ -20,3 +20,21 @@ data class FavoriteResponse(
     @SerialName("status_message")
     val statusMessage: String
 )
+
+@Serializable
+data class WatchlistRequest (
+    @SerialName("media_type")
+    val mediaType: String,
+    @SerialName("media_id")
+    val mediaId: Int,
+    val watchlist: Boolean
+)
+
+@Serializable
+data class WatchlistResponse(
+    val success: Boolean,
+    @SerialName("status_code")
+    val statusCode: Int,
+    @SerialName("status_message")
+    val statusMessage: String
+)

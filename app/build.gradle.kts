@@ -1,6 +1,3 @@
-import java.util.*
-
-@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     alias(libs.plugins.android.application)
     kotlin("android")
