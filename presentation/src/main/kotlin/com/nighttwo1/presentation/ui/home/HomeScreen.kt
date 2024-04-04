@@ -1,16 +1,21 @@
 package com.nighttwo1.presentation.ui.home
 
+import android.annotation.SuppressLint
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -20,8 +25,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
+import androidx.compose.ui.input.nestedscroll.NestedScrollSource
+import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import com.nighttwo1.presentation.res.vector.MyIconPack
@@ -29,16 +40,38 @@ import com.nighttwo1.presentation.res.vector.myiconpack.IcLogo
 import com.nighttwo1.presentation.theme.MoviesTheme
 import com.nighttwo1.presentation.ui.LocalMainViewNavigation
 import com.nighttwo1.presentation.ui.movie.MovieScreen
+import kotlin.math.roundToInt
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun HomeScreen() {
     val mainViewNavigation = LocalMainViewNavigation.current
     var currentView by remember { mutableStateOf(CurrentView.MOVIES) }
 
-    Box {
-        Column(modifier = Modifier.zIndex(1f)) {
+    val logoAppBarHeight = 50.dp
+    val logoAppBarHeightPx = with(LocalDensity.current) { logoAppBarHeight.toPx() }
+    val topAppBarHeight = 40.dp
+    val topAppBarHeightPx = with(LocalDensity.current) { topAppBarHeight.roundToPx().toFloat() }
+    val topAppBarOffsetHeightPx = remember { mutableStateOf(0f) }
+
+    val nestedScrollConnection = remember {
+        object : NestedScrollConnection {
+            override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
+                val delta = available.y
+                val newOffset = topAppBarOffsetHeightPx.value + delta
+                topAppBarOffsetHeightPx.value = newOffset.coerceIn(-topAppBarHeightPx, 0f)
+
+                return Offset.Zero
+            }
+        }
+    }
+
+    Scaffold(
+        modifier = Modifier.nestedScroll(nestedScrollConnection),
+        topBar = {
             Row(
-                modifier = Modifier.fillMaxWidth().padding(5.dp),
+                modifier = Modifier.fillMaxWidth().height(logoAppBarHeight).background(Color.Black).padding(5.dp)
+                    .zIndex(1f),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -53,8 +86,13 @@ fun HomeScreen() {
                 }
             }
             Row(
-                modifier = Modifier.fillMaxWidth().padding(20.dp, 0.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier.fillMaxWidth().offset {
+                    IntOffset(
+                        x = 0, y = topAppBarOffsetHeightPx.value.roundToInt() + logoAppBarHeightPx.toInt()
+                    )
+                },
+                horizontalArrangement = Arrangement.SpaceAround,
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 TextButton(onClick = { currentView = CurrentView.MOVIES }) {
                     Text("Movies", color = Color.White)
@@ -64,9 +102,12 @@ fun HomeScreen() {
                 }
             }
         }
-        when (currentView) {
-            CurrentView.MOVIES -> MovieScreen()
-            else -> Text("tv")
+    ) {
+        Box(modifier = Modifier.padding(top = logoAppBarHeight)) {
+            when (currentView) {
+                CurrentView.MOVIES -> MovieScreen()
+                else -> Text("tv")
+            }
         }
     }
 }
