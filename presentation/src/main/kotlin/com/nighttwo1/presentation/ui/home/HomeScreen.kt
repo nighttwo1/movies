@@ -1,16 +1,19 @@
 package com.nighttwo1.presentation.ui.home
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
@@ -19,10 +22,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -40,13 +42,16 @@ import com.nighttwo1.presentation.res.vector.myiconpack.IcLogo
 import com.nighttwo1.presentation.theme.MoviesTheme
 import com.nighttwo1.presentation.ui.LocalMainViewNavigation
 import com.nighttwo1.presentation.ui.movie.MovieScreen
+import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
+@OptIn(ExperimentalFoundationApi::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun HomeScreen() {
     val mainViewNavigation = LocalMainViewNavigation.current
-    var currentView by remember { mutableStateOf(CurrentView.MOVIES) }
+    val pagerState = rememberPagerState(0, 0f, pageCount = { PagerView.entries.size })
+    val scope = rememberCoroutineScope()
 
     val logoAppBarHeight = 50.dp
     val logoAppBarHeightPx = with(LocalDensity.current) { logoAppBarHeight.toPx() }
@@ -94,25 +99,43 @@ fun HomeScreen() {
                 horizontalArrangement = Arrangement.SpaceAround,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                TextButton(onClick = { currentView = CurrentView.MOVIES }) {
-                    Text("Movies", color = Color.White)
+                TextButton(onClick = {
+                    scope.launch {
+                        pagerState.animateScrollToPage(PagerView.MOVIES.ordinal)
+                    }
+                }) {
+                    Text(
+                        "Movies",
+                        color = if (pagerState.currentPage == PagerView.MOVIES.ordinal) Color.White else Color.Gray
+                    )
                 }
-                TextButton(onClick = { currentView = CurrentView.TV_SERIES }) {
-                    Text("TV Series", color = Color.White)
+                TextButton(onClick = {
+                    scope.launch {
+                        pagerState.animateScrollToPage(PagerView.TV_SERIES.ordinal)
+                    }
+                }) {
+                    Text(
+                        "TV Series",
+                        color = if (pagerState.currentPage == PagerView.TV_SERIES.ordinal) Color.White else Color.Gray
+                    )
                 }
             }
         }
     ) {
-        Box(modifier = Modifier.padding(top = logoAppBarHeight)) {
-            when (currentView) {
-                CurrentView.MOVIES -> MovieScreen()
-                else -> Text("tv")
+        HorizontalPager(
+            state = pagerState
+        ) { page ->
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                when (page) {
+                    0 -> MovieScreen()
+                    else -> Text("tv")
+                }
             }
         }
     }
 }
 
-enum class CurrentView {
+enum class PagerView {
     MOVIES, TV_SERIES
 }
 
