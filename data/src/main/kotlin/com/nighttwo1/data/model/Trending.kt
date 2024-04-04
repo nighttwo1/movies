@@ -50,8 +50,58 @@ private val dateFormat: SimpleDateFormat = SimpleDateFormat("yyyy-mm-dd")
 fun Trending.toDomain() = com.nighttwo1.domain.model.Trending(
     id = id,
     posterPath = posterPath ?: "",
-    releaseDate = dateFormat.parse(releaseDate)!!,
+    date = dateFormat.parse(releaseDate)!!,
     title = title,
+    rating = Ratings(rating),
+    overview = overview,
+    mediaType = MediaType.valueOf(mediaType),
+    genres = genres.map {
+        GenreType.getById(it)
+    }
+)
+
+@Serializable
+data class TMDBTrendingTV(
+    val page: Int,
+    @SerialName("total_pages")
+    val totalPages: Int,
+    @SerialName("total_results")
+    val totalResults: Int,
+    @SerialName("results")
+    val trendings: List<TrendingTV>,
+)
+
+@Serializable
+data class TrendingTV(
+    val id: Int,
+    @SerialName("poster_path")
+    val posterPath: String?,
+    @SerialName("first_air_date")
+    val firstAirDate: String,
+    val name: String,
+    @SerialName("vote_average")
+    val rating: Double,
+    val overview: String,
+    @SerialName("media_type")
+    val mediaType: String,
+    @SerialName("genre_ids")
+    val genres: List<Int>,
+)
+
+fun TMDBTrendingTV.toDomain(): com.nighttwo1.domain.model.TMDBTrending = com.nighttwo1.domain.model.TMDBTrending(
+    page = page,
+    totalPages = totalPages,
+    totalResults = totalResults,
+    trendings = trendings.map {
+        it.toDomain()
+    }
+)
+
+fun TrendingTV.toDomain() = com.nighttwo1.domain.model.Trending(
+    id = id,
+    posterPath = posterPath ?: "",
+    date = dateFormat.parse(firstAirDate)!!,
+    title = name,
     rating = Ratings(rating),
     overview = overview,
     mediaType = MediaType.valueOf(mediaType),

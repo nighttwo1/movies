@@ -33,9 +33,11 @@ class MovieViewModel @Inject constructor(
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), NetworkResult.Ready())
 
     val watchlistResult = MutableStateFlow<NetworkResult<Boolean>>(NetworkResult.Ready())
-    fun setWatchlist(watchlist: Watchlist) {
+    fun setWatchlist(trendingId: Int) {
         viewModelScope.launch {
-            setWatchlistUseCase(watchlist).collect(watchlistResult)
+            setWatchlistUseCase(
+                Watchlist("movie", trendingId, true)
+            ).collect(watchlistResult)
         }
     }
 }

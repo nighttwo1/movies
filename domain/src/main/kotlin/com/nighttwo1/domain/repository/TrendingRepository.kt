@@ -6,4 +6,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface TrendingRepository {
     fun getMovieTrending(timeWindow: String, language: String): Flow<NetworkResult<TMDBTrending>>
+    fun getTVSeriesTrending(timeWindow: String, language: String): Flow<NetworkResult<TMDBTrending>>
 }

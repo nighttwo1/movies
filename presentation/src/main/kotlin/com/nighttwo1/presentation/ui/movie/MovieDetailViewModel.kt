@@ -40,7 +40,6 @@ class MovieDetailViewModel @Inject constructor(
     val movieCreditsResult = mutableStateOf<NetworkResult<MovieCredits>>(NetworkResult.Ready())
     suspend fun getMovieCredits(movieId: String) {
         movieCreditsResult.value = movieCreditsUseCase(movieId)
-        Log.d("creditssss", "${movieCreditsResult.value}")
     }
 
     val movieFavoriteResult = mutableStateOf<NetworkResult<Boolean>>(NetworkResult.Ready())

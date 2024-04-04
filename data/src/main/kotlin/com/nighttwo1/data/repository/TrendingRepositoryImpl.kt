@@ -1,6 +1,7 @@
 package com.nighttwo1.data.repository
 
 import com.nighttwo1.data.adapter.networkAdapter
+import com.nighttwo1.data.model.TMDBTrendingTV
 import com.nighttwo1.data.model.toDomain
 import com.nighttwo1.data.service.TrendingService
 import com.nighttwo1.domain.NetworkResult
@@ -15,5 +16,10 @@ class TrendingRepositoryImpl @Inject constructor(
     override fun getMovieTrending(timeWindow: String, language: String): Flow<NetworkResult<TMDBTrending>> =
         networkAdapter {
             trendingService.getMovieTrending(timeWindow, language).toDomain()
+        }
+
+    override fun getTVSeriesTrending(timeWindow: String, language: String): Flow<NetworkResult<TMDBTrending>> =
+        networkAdapter {
+            trendingService.getTVSeriesTrending(timeWindow, language).toDomain()
         }
 }

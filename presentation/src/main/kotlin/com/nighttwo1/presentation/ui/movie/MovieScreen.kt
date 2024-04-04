@@ -38,7 +38,6 @@ import com.nighttwo1.domain.NetworkResult
 import com.nighttwo1.domain.model.MovieId
 import com.nighttwo1.domain.model.TMDBTrending
 import com.nighttwo1.domain.model.Trending
-import com.nighttwo1.domain.model.Watchlist
 import com.nighttwo1.presentation.component.textIconButton.TextIconButton
 import com.nighttwo1.presentation.ui.LocalMainViewNavigation
 
@@ -83,7 +82,7 @@ fun MovieScreen(
 @Composable
 fun BoxScope.Trending(
     trending: Trending?,
-    setWatchList: (watchlist: Watchlist) -> Unit,
+    setWatchList: (trendingId: Int) -> Unit,
     watchlistResult: NetworkResult<Boolean>
 ) {
     val context = LocalContext.current
@@ -94,7 +93,7 @@ fun BoxScope.Trending(
     }
 
     GlideImage(
-        model = "https://image.tmdb.org/t/p/original/${trending?.posterPath}",
+        model = "https://image.tmdb.org/t/p/original${trending?.posterPath}",
         contentDescription = null,
         modifier = Modifier.fillMaxSize(),
         contentScale = ContentScale.Crop,
@@ -145,7 +144,7 @@ fun BoxScope.Trending(
             verticalAlignment = Alignment.CenterVertically
         ) {
             TextIconButton(
-                onClick = { setWatchList(Watchlist("movie", trending!!.id, true)) },
+                onClick = { setWatchList(trending!!.id) },
                 enabled = watchlistResult !is NetworkResult.Loading,
                 loading = watchlistResult is NetworkResult.Loading,
                 prefixIcon = { Icon(imageVector = Icons.Default.Add, contentDescription = "Add") }

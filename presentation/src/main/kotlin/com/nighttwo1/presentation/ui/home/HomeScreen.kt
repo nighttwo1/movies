@@ -42,6 +42,7 @@ import com.nighttwo1.presentation.res.vector.myiconpack.IcLogo
 import com.nighttwo1.presentation.theme.MoviesTheme
 import com.nighttwo1.presentation.ui.LocalMainViewNavigation
 import com.nighttwo1.presentation.ui.movie.MovieScreen
+import com.nighttwo1.presentation.ui.tvseries.TVSeriesScreen
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
@@ -128,7 +129,7 @@ fun HomeScreen() {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 when (page) {
                     0 -> MovieScreen()
-                    else -> Text("tv")
+                    else -> TVSeriesScreen()
                 }
             }
         }
