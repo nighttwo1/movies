@@ -23,7 +23,7 @@ data class TMDBTrending(
 data class Trending(
     val id: Int,
     @SerialName("poster_path")
-    val posterPath: String,
+    val posterPath: String?,
     @SerialName("release_date")
     val releaseDate: String,
     val title: String,
@@ -49,7 +49,7 @@ private val dateFormat: SimpleDateFormat = SimpleDateFormat("yyyy-mm-dd")
 
 fun Trending.toDomain() = com.nighttwo1.domain.model.Trending(
     id = id,
-    posterPath = posterPath,
+    posterPath = posterPath ?: "",
     releaseDate = dateFormat.parse(releaseDate)!!,
     title = title,
     rating = Ratings(rating),

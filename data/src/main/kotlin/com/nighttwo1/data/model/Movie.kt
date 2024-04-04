@@ -23,7 +23,7 @@ data class TMDBMovies(
 data class Movie(
     val id: Int,
     @SerialName("poster_path")
-    val posterPath: String,
+    val posterPath: String?,
     @SerialName("release_date")
     val releaseDate: String,
     val title: String,
@@ -39,7 +39,7 @@ data class MovieDetail(
     @SerialName("backdrop_path")
     val backdropPath: String,
     @SerialName("poster_path")
-    val posterPath: String,
+    val posterPath: String?,
     @SerialName("release_date")
     val releaseDate: String,
     val title: String,
@@ -76,7 +76,7 @@ private val dateFormat: SimpleDateFormat = SimpleDateFormat("yyyy-mm-dd")
 
 fun Movie.toDomain() = com.nighttwo1.domain.model.Movie(
     id = MovieId(id),
-    posterPath = posterPath,
+    posterPath = posterPath?: "",
     releaseDate = dateFormat.parse(releaseDate)!!,
     title = title,
     rating = Ratings(rating),
@@ -89,7 +89,7 @@ fun MovieDetail.toDomain() = com.nighttwo1.domain.model.MovieDetail(
         com.nighttwo1.domain.model.Genres(GenreId(it.id), it.name)
     },
     backdropPath = backdropPath,
-    posterPath = posterPath,
+    posterPath = posterPath ?: "",
     releaseDate = dateFormat.parse(releaseDate)!!,
     title = title,
     overview = overview,
