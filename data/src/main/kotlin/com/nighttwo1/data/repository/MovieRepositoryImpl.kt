@@ -2,7 +2,7 @@ package com.nighttwo1.data.repository
 
 import androidx.paging.PagingData
 import com.nighttwo1.data.adapter.networkAdapter
-import com.nighttwo1.data.adapter.singlePager
+import com.nighttwo1.data.adapter.movieSinglePager
 import com.nighttwo1.data.model.toDomain
 import com.nighttwo1.data.service.MovieService
 import com.nighttwo1.domain.NetworkResult
@@ -16,19 +16,19 @@ import javax.inject.Inject
 class MovieRepositoryImpl @Inject constructor(
     private val movieService: MovieService
 ) : MovieRepository {
-    override fun getNowPlayingMovie(language: String, region: String): Flow<PagingData<Movie>> = singlePager { page ->
+    override fun getNowPlayingMovie(language: String, region: String): Flow<PagingData<Movie>> = movieSinglePager { page ->
         movieService.getNowPlayingMovie(language, page, region).toDomain()
     }
 
-    override fun getPopularMovie(language: String, region: String): Flow<PagingData<Movie>> = singlePager { page ->
+    override fun getPopularMovie(language: String, region: String): Flow<PagingData<Movie>> = movieSinglePager { page ->
         movieService.getPopularMovie(language, page, region).toDomain()
     }
 
-    override fun getTopRatedMovie(language: String, region: String): Flow<PagingData<Movie>> = singlePager { page ->
+    override fun getTopRatedMovie(language: String, region: String): Flow<PagingData<Movie>> = movieSinglePager { page ->
         movieService.getTopRatedMovie(language, page, region).toDomain()
     }
 
-    override fun getUpcomingMovie(language: String, region: String): Flow<PagingData<Movie>> = singlePager { page ->
+    override fun getUpcomingMovie(language: String, region: String): Flow<PagingData<Movie>> = movieSinglePager { page ->
         movieService.getUpcomingMovie(language, page, region).toDomain()
     }
 

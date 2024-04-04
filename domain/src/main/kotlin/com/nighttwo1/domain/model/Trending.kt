@@ -12,7 +12,7 @@ data class TMDBTrending(
 data class Trending(
     val id: Int,
     val posterPath: String,
-    val releaseDate: Date,
+    val date: Date,
     val title: String,
     val rating: Ratings,
     val overview: String,
