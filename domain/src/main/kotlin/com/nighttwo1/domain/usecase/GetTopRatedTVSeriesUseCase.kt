@@ -6,5 +6,5 @@ import javax.inject.Inject
 class GetTopRatedTVSeriesUseCase @Inject constructor(
     private val tvSeriesRepository: TVSeriesRepository
 ){
-    operator fun invoke(language: String = "ko") = tvSeriesRepository.getPopularTVSeries(language)
+    operator fun invoke(language: String = "ko") = tvSeriesRepository.getPopularTvSeries(language)
 }

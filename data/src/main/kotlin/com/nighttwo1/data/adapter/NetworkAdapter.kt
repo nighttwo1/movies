@@ -11,7 +11,7 @@ fun <T> networkAdapter(call: suspend () -> T): Flow<NetworkResult<T>> = flow {
     try {
         emit(NetworkResult.Success(call()))
     } catch (e: Exception) {
-        Log.d("network", "error")
+        Log.d("network", "error: $e")
         emit(NetworkResult.Error(e))
     }
 }

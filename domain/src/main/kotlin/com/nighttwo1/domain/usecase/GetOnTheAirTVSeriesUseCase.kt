@@ -7,5 +7,5 @@ class GetOnTheAirTVSeriesUseCase @Inject constructor(
     private val tvSeriesRepository: TVSeriesRepository
 ) {
     operator fun invoke(language: String = "ko", timeZone: String = "KR") =
-        tvSeriesRepository.getOnTheAirTVSeries(language, timeZone)
+        tvSeriesRepository.getOnTheAirTvSeries(language, timeZone)
 }

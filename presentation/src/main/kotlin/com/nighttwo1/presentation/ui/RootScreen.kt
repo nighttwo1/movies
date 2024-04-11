@@ -19,6 +19,7 @@ import com.nighttwo1.presentation.ui.home.HomeScreen
 import com.nighttwo1.presentation.ui.movie.MovieDetail
 import com.nighttwo1.presentation.ui.movie.MovieScreen
 import com.nighttwo1.presentation.ui.search.SearchScreen
+import com.nighttwo1.presentation.ui.tvseries.TvDetail
 import com.nighttwo1.presentation.ui.upcoming.UpcomingScreen
 
 @Composable
@@ -70,6 +71,12 @@ fun MainViewNavigation() {
             val movieId = backStackEntry.arguments?.getString("movieId")
             movieId?.let { id ->
                 MovieDetail(movieId = id)
+            }
+        }
+        composable(MainViewNavGraph.TVSeries.route + "/{tvId}") { backStackEntry ->
+            val tvId = backStackEntry.arguments?.getString("tvId")
+            tvId?.let { id ->
+                TvDetail(tvId = id)
             }
         }
     }

@@ -30,7 +30,7 @@ import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
-import com.nighttwo1.domain.model.TVSeries
+import com.nighttwo1.domain.model.TvSeries
 import com.nighttwo1.presentation.ui.LocalMainViewNavigation
 import java.text.SimpleDateFormat
 
@@ -39,7 +39,7 @@ import java.text.SimpleDateFormat
 @Composable
 fun TVSeriesPlaying(
     title: String,
-    tvSeries: LazyPagingItems<TVSeries>
+    tvSeries: LazyPagingItems<TvSeries>
 ) {
     val mainViewNavigation = LocalMainViewNavigation.current
     val lazyListState = rememberLazyListState()
@@ -72,7 +72,7 @@ fun TVSeriesPlaying(
                         val item = tvSeries[index] ?: return@items
                         Card(
                             modifier = Modifier.width(106.dp).clickable {
-//                                mainViewNavigation.goMovieDetail(item.id)
+                                mainViewNavigation.goTvDetail(item.id)
                             },
                             colors = CardDefaults.cardColors(
                                 containerColor = Color.Transparent

@@ -5,13 +5,13 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.nighttwo1.domain.model.TMDBTVSeries
-import com.nighttwo1.domain.model.TVSeries
+import com.nighttwo1.domain.model.TMDBTvSeries
+import com.nighttwo1.domain.model.TvSeries
 
-class TVSinglePageSource(val call: suspend (page: Int) -> TMDBTVSeries): PagingSource<Int, TVSeries>() {
-    override fun getRefreshKey(state: PagingState<Int, TVSeries>): Int? = null
+class TVSinglePageSource(val call: suspend (page: Int) -> TMDBTvSeries): PagingSource<Int, TvSeries>() {
+    override fun getRefreshKey(state: PagingState<Int, TvSeries>): Int? = null
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, TVSeries> {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, TvSeries> {
         val next = params.key ?: 1
         return try {
             val data = call(next)
@@ -30,7 +30,7 @@ class TVSinglePageSource(val call: suspend (page: Int) -> TMDBTVSeries): PagingS
 
 private const val perPage: Int = 20
 
-fun tvSinglePager(call: suspend (page: Int) -> TMDBTVSeries) =
+fun tvSinglePager(call: suspend (page: Int) -> TMDBTvSeries) =
     Pager(PagingConfig(pageSize = perPage)) {
         TVSinglePageSource(call)
     }.flow
