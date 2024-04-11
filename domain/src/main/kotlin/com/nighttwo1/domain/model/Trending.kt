@@ -44,7 +44,7 @@ enum class GenreType(val displayName: String, val id: Int) {
     Reality("Reality", 10764),
     Romance("Romance", 10749),
     Science_Fiction("Science Fiction", 878),
-    Science_Fiction_Fantasy("Sci-Fi & Fantasy", 10765),
+    Science_Fiction_Fantasy("Science Fiction & Fantasy", 10765),
     Soap("Soap", 10766),
     Talk("Talk", 10767),
     TV_Movie("TV Movie", 10770),

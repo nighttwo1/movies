@@ -35,8 +35,10 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.nighttwo1.domain.NetworkResult
+import com.nighttwo1.domain.model.MediaType
 import com.nighttwo1.domain.model.MovieId
 import com.nighttwo1.domain.model.TMDBTrending
+import com.nighttwo1.domain.model.TvId
 import com.nighttwo1.domain.model.Trending
 import com.nighttwo1.presentation.component.textIconButton.TextIconButton
 import com.nighttwo1.presentation.ui.LocalMainViewNavigation
@@ -152,7 +154,14 @@ fun BoxScope.Trending(
                 Text(text = "My List")
             }
             TextIconButton(
-                onClick = { mainViewNavigation.goMovieDetail(MovieId(trending!!.id)) },
+                onClick = {
+                    when(trending!!.mediaType){
+                        MediaType.movie -> mainViewNavigation.goMovieDetail(MovieId(trending.id))
+                        MediaType.tv -> mainViewNavigation.goTvDetail(TvId(trending.id))
+                        else -> {}
+                    }
+
+              },
                 prefixIcon = { Icon(imageVector = Icons.Default.Info, contentDescription = "Info") }
             ) {
                 Text(text = "Info")
