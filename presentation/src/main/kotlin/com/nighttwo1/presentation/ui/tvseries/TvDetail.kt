@@ -219,7 +219,7 @@ fun EpisodeCard(episode: Episode) {
         verticalAlignment = Alignment.CenterVertically
     ) {
         Box(
-            modifier = Modifier.height(60.dp).height(96.dp),
+            modifier = Modifier.width(96.dp).height(60.dp),
             contentAlignment = Alignment.Center
         ) {
             GlideImage(
