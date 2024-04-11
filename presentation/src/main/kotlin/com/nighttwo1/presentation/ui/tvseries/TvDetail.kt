@@ -219,12 +219,12 @@ fun EpisodeCard(episode: Episode) {
         verticalAlignment = Alignment.CenterVertically
     ) {
         Box(
-            modifier = Modifier.height(80.dp).then(Modifier.aspectRatio(1.2f)),
+            modifier = Modifier.height(60.dp).height(96.dp),
             contentAlignment = Alignment.Center
         ) {
             GlideImage(
                 model = "https://image.tmdb.org/t/p/original/${episode.stillPath}",
-                loading = placeholder(R.drawable.backdrop_poster),
+                loading = placeholder(R.drawable.tv_episode_placeholder_gray),
                 contentDescription = episode.name,
                 contentScale = ContentScale.FillWidth
             )
@@ -234,8 +234,8 @@ fun EpisodeCard(episode: Episode) {
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("Episode ${episode.episodeNumber}: ${episode.name}", fontWeight = FontWeight(500))
-            Text("${episode.runtime.toMinutes().toInt()} min", fontWeight = FontWeight(400), fontSize = 12.sp)
-            Text(episode.overview, fontWeight = FontWeight(400), fontSize = 12.sp)
+            Text("${episode.runtime.toMinutes().toInt()} min", fontWeight = FontWeight(400), fontSize = 10.sp)
+            Text(episode.overview, fontWeight = FontWeight(400), fontSize = 10.sp)
         }
     }
 }

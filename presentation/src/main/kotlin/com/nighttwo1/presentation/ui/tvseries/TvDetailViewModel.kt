@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nighttwo1.domain.NetworkResult
 import com.nighttwo1.domain.model.SeasonDetail
-import com.nighttwo1.domain.model.SeasonId
 import com.nighttwo1.domain.model.TvDetail
 import com.nighttwo1.domain.model.TvId
 import com.nighttwo1.domain.usecase.GetSeasonDetailUseCase
