@@ -169,11 +169,13 @@ fun UpcomingScreen(
                         )
                     }
                 }
-                Button(onClick = {
+                Button(
+                    onClick = {
                     showBottomSheet = false
-                    mainViewNavigation.goMovieDetail(selectedMovie!!.id)
-                }, modifier = Modifier.padding(10.dp, 4.dp).fillMaxWidth()){
-                    Icon(Icons.Filled.Info, contentDescription = "Info")
+                    mainViewNavigation.goMovieDetail(selectedMovie!!.id) },
+                    modifier = Modifier.padding(10.dp, 4.dp).fillMaxWidth()
+                ){
+                    Icon(Icons.Filled.Info, contentDescription = "Info", modifier = Modifier.padding(end = 10.dp))
                     Text("Get more details")
                 }
             }
