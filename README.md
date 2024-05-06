@@ -1,5 +1,5 @@
-[![Github All Releases](https://img.shields.io/github/v/release/nighttwo1/android-base-project)]()
-[![Github All Releases](https://img.shields.io/github/downloads/nighttwo1/android-base-project/total.svg)]()
+[![Github All Releases](https://img.shields.io/github/v/release/nighttwo1/movies)]()
+[![Github All Releases](https://img.shields.io/github/downloads/nighttwo1/movies/total.svg)]()
 # Movies
 Movies app contains features like Trailer playback, Home feed, Movies coming soon, Search / View for movie, tv shows. It uses APIs from [TMDB - The Movie Database](https://www.themoviedb.org/documentation/api).
 
