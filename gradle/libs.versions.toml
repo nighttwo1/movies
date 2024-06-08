@@ -1,31 +1,30 @@
 [versions]
-activityCompose = "1.8.2"
+activityCompose = "1.9.0"
 androidGradlePlugin = "8.2.2"
-androidxComposeBom = "2024.02.01"
-appcompat = "1.6.1"
-coreKtx = "1.12.0"
+androidxComposeBom = "2024.05.00"
+appcompat = "1.7.0"
+coreKtx = "1.13.1"
 espressoCore = "3.5.1"
-fragmentKtx = "1.6.2"
-hiltAndroidVersion = "2.50"
+fragmentKtx = "1.7.1"
+hiltAndroidVersion = "2.51"
 hiltNavigationCompose = "1.2.0"
 javaxInject = "1"
 kotlinPlugin = "1.9.22"
-hiltAndroid = "2.50"
-jsoup = "1.15.3"
+hiltAndroid = "2.51"
 junit = "4.13.2"
 junitVersion = "1.1.5"
-kotlinReflect = "1.9.10"
+kotlinReflect = "1.9.20"
 kotlinxCoroutinesCore = "1.8.0"
 kotlinxSerializationJson = "1.6.3"
-lifecycleRuntimeKtx = "2.7.0"
-material3 = "1.2.0"
-navigationCompose = "2.7.7"
+lifecycleRuntimeKtx = "2.8.1"
+material3 = "1.2.1"
+navigationCompose = "2.8.0-beta02"
 okhttp = "4.12.0"
 retrofit = "2.9.0"
 retrofit2KotlinxSerializationConverter = "1.0.0"
-ui-test-manifest = "1.6.2"
-paging = "3.2.1"
-pagingCompose = "3.3.0-alpha03"
+ui-test-manifest = "1.6.7"
+paging = "3.3.0"
+pagingCompose = "3.3.0"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activityCompose" }
@@ -46,7 +45,6 @@ androidx-navigation-compose = { module = "androidx.navigation:navigation-compose
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroidVersion" }
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hiltAndroidVersion" }
 javax-inject = { module = "javax.inject:javax.inject", version.ref = "javaxInject" }
-jsoup = { module = "org.jsoup:jsoup", version.ref = "jsoup" }
 junit = { module = "junit:junit", version.ref = "junit" }
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlinReflect" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutinesCore" }

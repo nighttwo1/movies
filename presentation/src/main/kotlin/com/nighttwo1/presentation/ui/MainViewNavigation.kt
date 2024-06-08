@@ -3,12 +3,13 @@ package com.nighttwo1.presentation.ui
 import androidx.navigation.NavHostController
 import com.nighttwo1.domain.model.MovieId
 import com.nighttwo1.domain.model.TvId
+import kotlinx.serialization.Serializable
 
 class MainViewNavigation(
     val navHostController: NavHostController,
 ) {
     fun goHome() {
-        navHostController.navigate(MainViewNavGraph.Home.route) {
+        navHostController.navigate(Home) {
             navHostController.graph.startDestinationRoute?.let {
                 popUpTo(it) { saveState = true }
             }
@@ -18,7 +19,7 @@ class MainViewNavigation(
     }
 
     fun goUpcoming() {
-        navHostController.navigate(MainViewNavGraph.Upcoming.route) {
+        navHostController.navigate(Upcoming) {
             navHostController.graph.startDestinationRoute?.let {
                 popUpTo(it) { saveState = true }
             }
@@ -28,7 +29,7 @@ class MainViewNavigation(
     }
 
     fun goSearch() {
-        navHostController.navigate(MainViewNavGraph.Search.route) {
+        navHostController.navigate(Search) {
             navHostController.graph.startDestinationRoute?.let {
                 popUpTo(it) { saveState = true }
             }
@@ -38,28 +39,19 @@ class MainViewNavigation(
     }
 
     fun goMovieDetail(movieId: MovieId) {
-        navHostController.navigate("${MainViewNavGraph.Movie.route}/${movieId.value}") {
-            launchSingleTop = true
-            restoreState = true
-            // 디테일 페이지로 이동할 때 뒤로 가기 버튼을 눌렀을 때 이전 화면으로 이동하도록 popUpTo 설정
-            popUpTo(MainViewNavGraph.Home.route) { inclusive = false }
-        }
-    }
-    fun goTvDetail(tvId: TvId) {
-        navHostController.navigate("${MainViewNavGraph.TVSeries.route}/${tvId.value}") {
-            launchSingleTop = true
-            restoreState = true
-            // 디테일 페이지로 이동할 때 뒤로 가기 버튼을 눌렀을 때 이전 화면으로 이동하도록 popUpTo 설정
-            popUpTo(MainViewNavGraph.Home.route) { inclusive = false }
-        }
+        navHostController.navigate(Movie(id = movieId.value.toString()))
     }
 
-    fun goBack(){
+    fun goTvDetail(tvId: TvId) {
+        navHostController.navigate(TVSeries(id = tvId.value.toString()))
+    }
+
+    fun goBack() {
         navHostController.popBackStack()
     }
 
     fun isHome(): Boolean {
-        return navHostController.currentBackStackEntry?.destination?.route == MainViewNavGraph.Home.route
+        return navHostController.currentBackStackEntry?.destination?.route == Home.javaClass.name
     }
 
 //    fun isMovie(): Boolean {
@@ -71,36 +63,25 @@ class MainViewNavigation(
 //    }
 
     fun isUpcoming(): Boolean {
-        return navHostController.currentBackStackEntry?.destination?.route == MainViewNavGraph.Upcoming.route
+        return navHostController.currentBackStackEntry?.destination?.route == Upcoming.javaClass.name
     }
 
     fun isSearch(): Boolean {
-        return navHostController.currentBackStackEntry?.destination?.route == MainViewNavGraph.Search.route
+        return navHostController.currentBackStackEntry?.destination?.route == Search.javaClass.name
     }
 }
 
-interface NavigationRoute {
-    val route: String
-}
+@Serializable
+object Home
 
-object MainViewNavGraph {
-    object Home : NavigationRoute {
-        override val route = "Home"
-    }
+@Serializable
+object Search
 
-    object Search : NavigationRoute {
-        override val route = "Search"
-    }
+@Serializable
+data class Movie(val id: String)
 
-    object Movie : NavigationRoute {
-        override val route = "Home/Movie"
-    }
+@Serializable
+data class TVSeries(val id: String)
 
-    object TVSeries : NavigationRoute {
-        override val route = "Home/TVSeries"
-    }
-
-    object Upcoming : NavigationRoute {
-        override val route = "Upcoming"
-    }
-}
+@Serializable
+object Upcoming

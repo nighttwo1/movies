@@ -4,6 +4,7 @@ plugins {
     kotlin("android")
     alias(libs.plugins.dagger.hilt.android)
     kotlin("kapt")
+    kotlin("plugin.serialization")
 }
 
 android {
@@ -78,6 +79,8 @@ dependencies {
     implementation(libs.paging.runtime)
     implementation(libs.paging.compose)
     implementation("com.github.bumptech.glide:compose:1.0.0-beta01")
+
+    implementation(libs.kotlinx.serialization.json)
 }
 
 kapt {
