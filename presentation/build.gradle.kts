@@ -78,9 +78,10 @@ dependencies {
     implementation(libs.paging.common)
     implementation(libs.paging.runtime)
     implementation(libs.paging.compose)
-    implementation("com.github.bumptech.glide:compose:1.0.0-beta01")
+    implementation(libs.glide.compose)
 
     implementation(libs.kotlinx.serialization.json)
+    implementation(libs.timber)
 }
 
 kapt {
