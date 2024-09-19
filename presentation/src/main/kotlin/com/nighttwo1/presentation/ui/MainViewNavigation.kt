@@ -1,5 +1,6 @@
 package com.nighttwo1.presentation.ui
 
+import android.util.Log
 import androidx.navigation.NavHostController
 import com.nighttwo1.domain.model.MovieId
 import com.nighttwo1.domain.model.TvId
@@ -10,9 +11,7 @@ class MainViewNavigation(
 ) {
     fun goHome() {
         navHostController.navigate(Home) {
-            navHostController.graph.startDestinationRoute?.let {
-                popUpTo(it) { saveState = true }
-            }
+            popUpTo(navHostController.graph.startDestinationId)
             launchSingleTop = true
             restoreState = true
         }
@@ -20,9 +19,7 @@ class MainViewNavigation(
 
     fun goUpcoming() {
         navHostController.navigate(Upcoming) {
-            navHostController.graph.startDestinationRoute?.let {
-                popUpTo(it) { saveState = true }
-            }
+            popUpTo(navHostController.graph.startDestinationId)
             launchSingleTop = true
             restoreState = true
         }
@@ -30,9 +27,7 @@ class MainViewNavigation(
 
     fun goSearch() {
         navHostController.navigate(Search) {
-            navHostController.graph.startDestinationRoute?.let {
-                popUpTo(it) { saveState = true }
-            }
+            popUpTo(navHostController.graph.startDestinationId)
             launchSingleTop = true
             restoreState = true
         }
@@ -51,16 +46,9 @@ class MainViewNavigation(
     }
 
     fun isHome(): Boolean {
+        Log.d("destination", "${navHostController.currentBackStackEntry?.destination?.route}")
         return navHostController.currentBackStackEntry?.destination?.route == Home.javaClass.name
     }
-
-//    fun isMovie(): Boolean {
-//        return navHostController.currentBackStackEntry?.destination?.route == MainViewNavGraph.Movie.route
-//    }
-//
-//    fun isTVSeries(): Boolean {
-//        return navHostController.currentBackStackEntry?.destination?.route == MainViewNavGraph.TVSeries.route
-//    }
 
     fun isUpcoming(): Boolean {
         return navHostController.currentBackStackEntry?.destination?.route == Upcoming.javaClass.name

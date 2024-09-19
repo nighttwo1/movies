@@ -14,6 +14,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.nighttwo1.domain.NetworkResult
 import com.nighttwo1.domain.model.TMDBTrending
@@ -22,8 +23,8 @@ import com.nighttwo1.presentation.ui.movie.Trending
 @Composable
 fun TVSeriesScreen(viewModel: TVSeriesViewModel = hiltViewModel()) {
     val scrollState = rememberScrollState()
-    val trending by viewModel.trendingTVSeries.collectAsState()
-    val watchlistResult by viewModel.watchlistResult.collectAsState()
+    val trending by viewModel.trendingTVSeries.collectAsStateWithLifecycle()
+    val watchlistResult by viewModel.watchlistResult.collectAsStateWithLifecycle()
     val onTheAirTVSeries = viewModel.onTheAirTVSeries.collectAsLazyPagingItems()
     val popularTVSeries = viewModel.popularTVSeries.collectAsLazyPagingItems()
     val topRatedTVSeries = viewModel.topRatedTVSeries.collectAsLazyPagingItems()

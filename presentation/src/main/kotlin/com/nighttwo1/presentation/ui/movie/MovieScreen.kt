@@ -31,6 +31,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
@@ -51,8 +52,8 @@ fun MovieScreen(
     val nowPlayings = movieViewModel.nowPlayingMovies.collectAsLazyPagingItems()
     val popularMovies = movieViewModel.popularMovies.collectAsLazyPagingItems()
     val topRatedMovies = movieViewModel.topRatedMovies.collectAsLazyPagingItems()
-    val trendingMovie by movieViewModel.getTrendingMovie.collectAsState()
-    val watchlistResult by movieViewModel.watchlistResult.collectAsState()
+    val trendingMovie by movieViewModel.getTrendingMovie.collectAsStateWithLifecycle()
+    val watchlistResult by movieViewModel.watchlistResult.collectAsStateWithLifecycle()
 
     Column(
         modifier = Modifier.verticalScroll(scrollState)

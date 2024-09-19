@@ -48,6 +48,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.bumptech.glide.integration.compose.placeholder
@@ -72,7 +73,7 @@ fun MovieDetail(
     movieId: String?
 ) {
     val mainViewNavigation = LocalMainViewNavigation.current
-    val movie by viewModel.movieDetailResult.collectAsState()
+    val movie by viewModel.movieDetailResult.collectAsStateWithLifecycle()
     val movieAccountStatesResult by viewModel.movieAccountStatesResult
     val movieCredits by viewModel.movieCreditsResult
     val favoriteResult by viewModel.movieFavoriteResult
